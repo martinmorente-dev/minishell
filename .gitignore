@@ -1,0 +1,5 @@
+# Obj file
+ojs/*
+objs/
+*.o
+minishell
