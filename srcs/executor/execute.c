@@ -73,10 +73,10 @@ int			exec_builtin(t_cmd *cmd, t_env *env)
 		return (1);
 	if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 		return (builtin_echo(cmd->args));
+  if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
+		return (builtin_pwd());
 	/*if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
 		return (builtin_cd(cmd->args, *env));
-	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
-		return (builtin_pwd());
 	if (ft_strncmp(cmd->args[0], "export", 7) == 0)
 		return (builtin_export(cmd->args, env));
 	if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
