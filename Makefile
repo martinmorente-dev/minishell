@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mafarino <mafarino@student.42malaga.com    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/02/05 17:23:54 by mafarino          #+#    #+#              #
+#    Updated: 2026/02/05 17:24:23 by mafarino         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME		= minishell
 
@@ -84,11 +95,11 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
-
 $(LIBFT):
 	make -C $(LIBFT_DIR)
+
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS)  $(LIBS) $(OBJS) $(LIBFT)  -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
@@ -96,7 +107,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	rm -rf $(OBJ_DIR)
-	make -C $(LIBFT_DIR) clean
+	make -C libft clean
 
 fclean: clean
 	rm -f $(NAME)
