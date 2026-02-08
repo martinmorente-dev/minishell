@@ -6,7 +6,7 @@
 /*   By: mafarino <mafarino@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:01:45 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/03 20:11:18 by mafarino         ###   ########.fr       */
+/*   Updated: 2026/02/08 15:49:41 by mafarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sigint_handler(int sig)
 	g_signal_received = SIGINT;
 	write(1, "\n", 1);
 	rl_on_new_line();		
-	rl_replace_line("", 0);	
+	//rl_replace_line("", 0);	
 	rl_redisplay();			
 }
 
@@ -170,7 +170,10 @@ int	main(int argc, char **argv, char **envp)
 	
 	cleanup_shell(shell);
 	
-	rl_clear_history();
-	
+	//rl_clear_history();
+	clear_history();
 	return (exit_code);
 }
+///rl_clear_history();
+//	clear_history();
+//rl_replace_line("", 0);

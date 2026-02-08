@@ -6,7 +6,7 @@
 /*   By: mafarino <mafarino@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:01 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/03 20:15:07 by mafarino         ###   ########.fr       */
+/*   Updated: 2026/02/08 16:06:28 by mafarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
+# include "../libft/libft.h"
 
 typedef enum e_token_type
 {
@@ -132,13 +133,17 @@ t_cmd		*append_cmd(t_cmd *cmds, t_cmd *new_cmd);
 
 void		free_commands(t_cmd *cmds);
 
+void	print_all_commands(t_cmd *cmds);//++++
+void	print_command(t_cmd *cmd);//++++
+void	print_all_env(t_env *env);//+++
+
 char		*process_quotes(char *str);
 
 bool		check_quotes(char *str);//+++
 
 /* ==================== (PARTNER 2) ==================== */
 
-int			execute_commands(t_cmd *cmds, t_env *env);
+int			execute_commands(t_cmd *cmds, t_env *env);//--
 
 int			setup_pipes(t_cmd *cmds);
 
@@ -148,19 +153,15 @@ pid_t		fork_and_exec(t_cmd *cmd, t_env *env);
 
 int			wait_children(void);
 
-int			apply_redirections(t_redir *redirs);
+int			apply_redirections(t_redir *redirs);//--
 
 int			open_redir_file(t_redir *redir);
 
-int			handle_heredoc(char *delimiter);
+int			handle_heredoc(char *delimiter);//--
 
-/*
-** (BUILTINS)
-*/
+bool		is_builtin(char *cmd);//---
 
-bool		is_builtin(char *cmd);
-
-int			exec_builtin(t_cmd *cmd, t_env *env);
+int			exec_builtin(t_cmd *cmd, t_env *env);//---
 
 int			builtin_echo(char **args);
 int			builtin_cd(char **args, t_env *env);
@@ -171,10 +172,10 @@ int			builtin_env(t_env *env);
 int			builtin_exit(char **args, t_minishell *shell);
 
 
-char		*find_command_path(char *cmd, t_env *env);
+char		*find_command_path(char *cmd, t_env *env);//--
+char		**env_to_array(t_env *env);
 
-
-bool		is_executable(char *path);
+bool		is_executable(char *path);//--
 
 /* ==================== (PARTNER 1) ==================== */
 t_env		*init_env(char **envp);//++++
