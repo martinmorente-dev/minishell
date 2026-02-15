@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafarino <mafarino@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: martin <martin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:01:45 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/08 15:49:41 by mafarino         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:20:27 by martin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	process_line(t_minishell *shell)
 		return;
 	}
 	
-	shell->exit_code = execute_commands(shell->commands, shell->env);
+	shell->exit_code = execute_commands(shell);
 	
 	free_commands(shell->commands);
 	shell->commands = NULL;

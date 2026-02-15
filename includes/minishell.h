@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martin <martin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:01 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/10 19:16:24 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:39:22 by martin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef MINISHELL_H
@@ -144,7 +145,7 @@ bool		check_quotes(char *str);//+++
 
 /* ==================== (PARTNER 2) ==================== */
 
-int			execute_commands(t_cmd *cmds, t_env *env);//--
+int			execute_commands(t_minishell *shell);//--
 
 int			setup_pipes(t_cmd *cmds);
 
@@ -162,7 +163,7 @@ int			handle_heredoc(char *delimiter);//--
 
 bool		is_builtin(char *cmd);//---
 
-int			exec_builtin(t_cmd *cmd, t_minishell *shell);//---
+int			exec_builtin(t_minishell *shell, t_cmd *cmd);//---
 
 int			builtin_echo(char **args);
 int			builtin_cd(char **args);
@@ -170,7 +171,7 @@ int			builtin_pwd(void);
 int			builtin_export(char **args, t_env **env);
 int			builtin_unset(char **args, t_env **env);
 int			builtin_env(t_env *env);
-int			builtin_exit(t_minishell *shell);
+int			builtin_exit(t_minishell *shell, char **args);
 
 
 char		*find_command_path(char *cmd, t_env *env);//--
