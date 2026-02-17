@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martin <martin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 19:02:28 by mmorente          #+#    #+#             */
-/*   Updated: 2026/02/15 19:46:53 by martin           ###   ########.fr       */
+/*   Updated: 2026/02/17 18:19:21 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_exit(t_minishell *shell, char ** args)
+int	builtin_exit(t_minishell *shell, char **args)
 {
 	if (args[1])
 	{

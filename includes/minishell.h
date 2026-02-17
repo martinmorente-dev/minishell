@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martin <martin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:01 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/15 19:39:22 by martin           ###   ########.fr       */
+/*   Updated: 2026/02/17 19:34:49 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ typedef enum e_redir_type
 
 typedef struct s_redir
 {
-	t_redir_type	type;	
-	char			*file;	
-	int				fd;			
-	struct s_redir	*next;		
+	t_redir_type	type;
+	char			*file;
+	int				fd;
+	struct s_redir	*next;
 }	t_redir;
 
 
@@ -87,9 +87,10 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
-	char			*key;		// "USER", "HOME", "PATH"
-	char			*value;		//"student", "/home/student"
-	struct s_env	*next;	
+	char	*key;// "USER", "HOME", "PATH"
+	char	*value; //"student", "/home/student"
+	bool	exported;
+	struct s_env	*next;
 }	t_env;
 
 typedef struct s_minishell
@@ -138,6 +139,7 @@ void		free_commands(t_cmd *cmds);
 void	print_all_commands(t_cmd *cmds);//++++
 void	print_command(t_cmd *cmd);//++++
 void	print_all_env(t_env *env);//+++
+bool	set_env_value(t_env **env, char *key, char *value);
 
 char		*process_quotes(char *str);
 
