@@ -171,8 +171,8 @@ int			builtin_echo(char **args);
 int			builtin_cd(char **args);
 int			builtin_pwd(void);
 int			builtin_export(char **args, t_env **env);
-int			builtin_unset(char **args, t_env **env);
-int			builtin_env(t_env *env);
+int			builtin_unset(char **args, t_env *env);
+int			builtin_env(t_env *env, char **args);
 int			builtin_exit(t_minishell *shell, char **args);
 
 
@@ -198,6 +198,7 @@ void		sigquit_handler(int sig);//+++++
 
 
 void		print_error(char *msg);//++++
+void		ft_free_double_ptr(void **ptr_array);
 
 
 

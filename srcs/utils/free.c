@@ -58,3 +58,19 @@ void	print_all_commands(t_cmd *cmds)
 		i++;
 	}
 }
+
+
+void    ft_free_double_ptr(void **ptr_array)
+{
+    int i;
+
+    if (!ptr_array)
+        return;
+    i = 0;
+    while (ptr_array[i])
+    {
+        free(ptr_array[i]);
+        i++;
+    }
+    free(ptr_array);
+}

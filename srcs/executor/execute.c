@@ -76,7 +76,7 @@ int	exec_builtin(t_minishell *shell, t_cmd *cmd)
 	if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
 		return (builtin_cd(cmd->args));
 	if (ft_strncmp(cmd->args[0], "env", 4) == 0)
-		return (builtin_env(shell->env));
+		return (builtin_env(shell->env, cmd->args));
 	if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
 		return (builtin_exit(shell, cmd->args));
 	if (ft_strncmp(cmd->args[0], "export", 7) == 0)

@@ -12,33 +12,6 @@
 
 #include "minishell.h"
 
-int	builtin_export(char **args, t_env *env)
-{
-	if (!args[1])
-		return (show_exported_env(env));
-	else
-		return (export_and_set(args[1], env));
-	return (0);
-}
-
-
-int	export_and_set(char *arg, t_env *env)
-{
-	char	**args_splited;
-
-	if (ft_strchr(arg, '='))
-	{
-		args_splited = ft_split(arg, '=');
-		set_env_value(&env, args_splited[0], args_splited[2]);
-		set_env_to_export(env, args_splited[0]);
-	}
-	else
-	{
-		set_env_value(&env, arg, NULL);
-		set_env_to_export(env, arg);
-	}
-}
-
 int	show_exported_env(t_env *env)
 {
 	while (env)
@@ -57,8 +30,41 @@ void	set_env_to_export(t_env *env, char *key)
 	key_len = ft_strlen(key);
 	while (env)
 	{
-		if (ft_strncmp(env->key, key, key_len + 1) == 0)
+		 if (ft_strncmp(env->key, key, key_len) == 0 && 
+            env->key[key_len] == '\0')
 			env->exported = true;
 		env = env->next;
 	}
 }
+
+int	export_and_set(char *arg, t_env **env)
+{
+	char	**args_splited;
+
+	args_splited = ft_split(arg, '=');
+	if (args_splited[1])
+	{
+		set_env_value(env, args_splited[0], args_splited[1]);
+		set_env_to_export(*env, args_splited[0]);
+	}
+	else
+	{
+		set_env_value(env, arg, NULL);
+		set_env_to_export(*env, arg);
+	}
+	ft_free_double_ptr((void **) args_splited);
+	return (0);
+}
+
+
+
+int	builtin_export(char **args, t_env **env)
+{
+	if (!args[1])
+		return (show_exported_env(*env));
+	else
+		return (export_and_set(args[1], env));
+	return (0);
+}
+
+

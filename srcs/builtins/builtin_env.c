@@ -13,8 +13,13 @@
 
 #include "minishell.h"
 
-int	builtin_env(t_env *env)
+int	builtin_env(t_env *env, char **args)
 {
+	if (args[1])
+	{
+		ft_putstr_fd("env: too many arguments\n", 2);
+		return (1);
+	}
 	while (env)
 	{
 		printf("%s=%s\n", env->key, env->value);
