@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:01 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/17 19:34:49 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/02/21 12:19:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int			builtin_echo(char **args);
 int			builtin_cd(char **args);
 int			builtin_pwd(void);
 int			builtin_export(char **args, t_env **env);
-int			builtin_unset(char **args, t_env *env);
+int			builtin_unset(char **args, t_env **env);
 int			builtin_env(t_env *env, char **args);
 int			builtin_exit(t_minishell *shell, char **args);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:57:50 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/17 18:21:51 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/02/21 12:19:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,8 @@ int	exec_builtin(t_minishell *shell, t_cmd *cmd)
 		return (builtin_exit(shell, cmd->args));
 	if (ft_strncmp(cmd->args[0], "export", 7) == 0)
 		return (builtin_export(cmd->args, &shell->env));
-	/*if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
+	if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
 		return (builtin_unset(cmd->args, &shell->env));
-	*/
 	return (1);
 }
 

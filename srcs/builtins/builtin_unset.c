@@ -13,3 +13,14 @@
 
 #include "minishell.h"
 
+int builtin_unset(char **args, t_env **env)
+{
+    int i = 1;
+    
+    while (args[i])
+    {
+        unset_env_value(env, args[i])
+        i++;
+    }
+    return (0);
+}   
