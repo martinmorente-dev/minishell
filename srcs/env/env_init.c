@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:01:32 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/17 19:21:01 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/02/21 12:24:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ bool	unset_env_value(t_env **env, char *key)
 	prev = NULL;
 	while (current)
 	{
-		if (ft_strncmp(current->key, key, key_len + 1) == 0)
+		if (ft_strncmp(current->key, key, key_len) == 0)
 		{
 			if (prev)
 				prev->next = current->next;
