@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martin <martin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 18:21:15 by mmorente          #+#    #+#             */
-/*   Updated: 2026/02/17 19:44:08 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/02/23 15:48:38 by martin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	export_and_set(char *arg, t_env **env)
 	}
 	else
 	{
-		set_env_value(env, arg, NULL);
+		set_env_value(env, arg, "");
 		set_env_to_export(*env, arg);
 	}
 	ft_free_double_ptr((void **) args_splited);
