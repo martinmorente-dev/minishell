@@ -6,7 +6,7 @@
 /*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:01 by mafarino          #+#    #+#             */
-/*   Updated: 2026/03/03 18:03:32 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/03/03 18:44:54 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	process_line(t_minishell *shell);//+++
 void	print_tokens(t_token *tokens);//++++
 int	count_tokens(t_token *tokens);//+++
 t_token		*tokenize(char *line);//++++
-
+t_env	*init_env(char **envp);
 t_token		*create_token(t_token_type type, char *value);//++++
 
 void		add_token(t_token **tokens, t_token *new_token);//++++
