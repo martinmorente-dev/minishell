@@ -6,7 +6,7 @@
 /*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:01 by mafarino          #+#    #+#             */
-/*   Updated: 2026/03/03 18:53:27 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/03/03 19:06:41 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ void		sigint_handler(int sig);
 void		sigquit_handler(int sig);
 void		print_error(char *msg);
 void		ft_free_double_ptr(void **ptr_array);
+void		cleanup_shell(t_minishell *shell);
+
 
 int			count_tokens(t_token *tokens);
 int			execute_commands(t_minishell *shell);
