@@ -6,23 +6,12 @@
 /*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 17:16:28 by mmorente          #+#    #+#             */
-/*   Updated: 2026/02/10 16:56:31 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/03/03 19:13:27 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Builtin echo
- *
- * PARAMS:
- * 
- * input: The input that the user wants to print
- * 
- *
- * RETURN:
- *
- * Return a int indicating 0 = success 1 = error
-*/
 int	builtin_echo(char **input)
 {
 	int		i;

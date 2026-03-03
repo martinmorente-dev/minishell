@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martin <martin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 18:21:15 by mmorente          #+#    #+#             */
-/*   Updated: 2026/02/23 15:48:38 by martin           ###   ########.fr       */
+/*   Updated: 2026/03/03 19:14:14 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	set_env_to_export(t_env *env, char *key)
 	key_len = ft_strlen(key);
 	while (env)
 	{
-		 if (ft_strncmp(env->key, key, key_len) == 0 && 
-            env->key[key_len] == '\0')
+		if (ft_strncmp(env->key, key, key_len) == 0
+			&& env->key[key_len] == '\0')
 			env->exported = true;
 		env = env->next;
 	}

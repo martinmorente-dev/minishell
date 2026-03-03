@@ -6,7 +6,7 @@
 /*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:01 by mafarino          #+#    #+#             */
-/*   Updated: 2026/03/03 19:06:41 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/03/03 19:40:33 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_token		*create_token(t_token_type type, char *value);
 t_token		*tokenize(char *line);
 
 t_env		*init_env(char **envp);
+t_env		*create_env_node(char *key, char *value);
 
 t_cmd		*parse_tokens(t_token *tokens, t_env *env);
 t_cmd		*create_cmd(void);
@@ -120,6 +121,7 @@ void		sigquit_handler(int sig);
 void		print_error(char *msg);
 void		ft_free_double_ptr(void **ptr_array);
 void		cleanup_shell(t_minishell *shell);
+void		add_env_to_list(t_env **env_list, t_env *new_node);
 
 
 int			count_tokens(t_token *tokens);

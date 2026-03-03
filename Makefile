@@ -6,7 +6,7 @@
 #    By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 17:23:54 by mafarino          #+#    #+#              #
-#    Updated: 2026/03/03 19:07:23 by mmorente         ###   ########.fr        #
+#    Updated: 2026/03/03 19:37:54 by mmorente         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,22 +62,20 @@ BUILTIN_SRC	= $(BUILTIN_DIR)/builtin_echo.c \
 			  $(BUILTIN_DIR)/builtin_env.c \
 			  $(BUILTIN_DIR)/builtin_export.c \
 			  $(BUILTIN_DIR)/builtin_unset.c \
-			  $(BUILTIN_DIR)/builtin_exit.c \
-			  $(BUILTIN_DIR)/builtin_utils.c
+			  $(BUILTIN_DIR)/builtin_exit.c
 
 REDIR_SRC	= $(REDIR_DIR)/redirections.c \
 			  $(REDIR_DIR)/redir_utils.c \
 			  $(REDIR_DIR)/heredoc.c
 
-ENV_SRC		= $(ENV_DIR)/env_init.c 
+ENV_SRC		= $(ENV_DIR)/env_init.c \
+			  $(ENV_DIR)/env_utils.c
 
 SIGNAL_SRC	= $(SIGNAL_DIR)/signals.c
 
-UTILS_SRC	= $(UTILS_DIR)/errors.c \
-			  $(UTILS_DIR)/free.c \
+UTILS_SRC	= $(UTILS_DIR)/free.c \
 			  $(UTILS_DIR)/utils.c \
-			  $(UTILS_DIR)/setup.c \
-			  $(UTILS_DIR)/string_utils.c
+			  $(UTILS_DIR)/setup.c
 
 SRCS		= $(MAIN_SRC) \
 			  $(LEXER_SRC) \
