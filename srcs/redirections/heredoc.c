@@ -6,7 +6,7 @@
 /*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:23:31 by mafarino          #+#    #+#             */
-/*   Updated: 2026/03/05 19:55:20 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/03/05 20:03:58 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,32 +84,18 @@ int	handle_heredoc(char *delimiter)
 		return (-1);
 	wfd = open(tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (wfd < 0)
-	{
 		return (perror("heredoc"),
 			free(tmp), -1);
-	}
 	old = signal(SIGINT, heredoc_sigint_handler);
 	if (read_heredoc_lines(delimiter, wfd) < 0)
-	{
-		unlink(tmp);
-		free(tmp);
-		signal(SIGINT, old);
-		return (close(wfd), -1);
-	}
+		return (close(wfd), unlink(tmp),
+			free(tmp), signal(SIGINT, old), -1);
 	close(wfd);
 	rfd = open(tmp, O_RDONLY);
 	if (rfd < 0)
-	{
-		perror("heredoc");
-		unlink(tmp);
-		free(tmp);
-		signal(SIGINT, old);
-		return (-1);
-	}
-	unlink(tmp);
-	free(tmp);
-	signal(SIGINT, old);
-	return (rfd);
+		return (perror("heredoc"), unlink(tmp),
+			free(tmp), signal(SIGINT, old), -1);
+	return (unlink(tmp), free(tmp), signal(SIGINT, old), rfd);
 }
 
 
