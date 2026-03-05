@@ -6,7 +6,7 @@
 #    By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 17:23:54 by mafarino          #+#    #+#              #
-#    Updated: 2026/03/03 19:37:54 by mmorente         ###   ########.fr        #
+#    Updated: 2026/03/05 19:32:16 by mmorente         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,9 +64,8 @@ BUILTIN_SRC	= $(BUILTIN_DIR)/builtin_echo.c \
 			  $(BUILTIN_DIR)/builtin_unset.c \
 			  $(BUILTIN_DIR)/builtin_exit.c
 
-REDIR_SRC	= $(REDIR_DIR)/redirections.c \
-			  $(REDIR_DIR)/redir_utils.c \
-			  $(REDIR_DIR)/heredoc.c
+REDIR_SRC	= $(REDIR_DIR)/heredoc.c \
+			  $(REDIR_DIR)/heredoc_utils.c
 
 ENV_SRC		= $(ENV_DIR)/env_init.c \
 			  $(ENV_DIR)/env_utils.c

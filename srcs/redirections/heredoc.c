@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafarino <mafarino@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:23:31 by mafarino          #+#    #+#             */
-/*   Updated: 2026/02/08 15:34:58 by mafarino         ###   ########.fr       */
+/*   Updated: 2026/03/05 19:55:20 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,7 @@ static char	*create_temp_filename(void)
 	return (filename);
 }
 
-static void	write_line_to_fd(int fd, char *line)
-{
-	write(fd, line, ft_strlen(line));
-	write(fd, "\n", 1);
-}
-
-static int	read_heredoc_lines(char *delimiter, int temp_fd)
+int	read_heredoc_lines(char *delimiter, int temp_fd)
 {
 	char	*line;
 	size_t	delim_len;
@@ -56,85 +50,66 @@ static int	read_heredoc_lines(char *delimiter, int temp_fd)
 	while (1)
 	{
 		line = readline("> ");
-		
 		if (!line)
-		{
-			ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
-			ft_putstr_fd(delimiter, 2);
-			ft_putstr_fd("')\n", 2);
-			return (0);
-		}
-		
+			return (ft_putstr_fd("minishell: unexpected EOF\n", 2),
+				0);
 		if (g_signal_received == SIGINT)
 		{
 			free(line);
 			return (-1);
 		}
-		
 		if (ft_strncmp(line, delimiter, delim_len + 1) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
-		
 		write_line_to_fd(temp_fd, line);
 		free(line);
 	}
-	
 	return (0);
 }
 
 int	handle_heredoc(char *delimiter)
 {
-	char				*temp_filename;
-	int					temp_fd;
-	int					read_fd;
-	void				(*old_sigint)(int);
+	char	*tmp;
+	int		wfd;
+	int		rfd;
+	void	(*old)(int);
 
 	if (!delimiter)
 		return (-1);
-	
 	g_signal_received = 0;
-	
-    temp_filename = create_temp_filename();
-	if (!temp_filename)
+	tmp = create_temp_filename();
+	if (!tmp)
 		return (-1);
-	
-	temp_fd = open(temp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (temp_fd < 0)
+	wfd = open(tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (wfd < 0)
+	{
+		return (perror("heredoc"),
+			free(tmp), -1);
+	}
+	old = signal(SIGINT, heredoc_sigint_handler);
+	if (read_heredoc_lines(delimiter, wfd) < 0)
+	{
+		unlink(tmp);
+		free(tmp);
+		signal(SIGINT, old);
+		return (close(wfd), -1);
+	}
+	close(wfd);
+	rfd = open(tmp, O_RDONLY);
+	if (rfd < 0)
 	{
 		perror("heredoc");
-		free(temp_filename);
+		unlink(tmp);
+		free(tmp);
+		signal(SIGINT, old);
 		return (-1);
 	}
-	
-	old_sigint = signal(SIGINT, heredoc_sigint_handler);
-	
-	if (read_heredoc_lines(delimiter, temp_fd) < 0)
-	{
-		close(temp_fd);
-		unlink(temp_filename);
-		free(temp_filename);
-		signal(SIGINT, old_sigint);
-		return (-1);
-	}
-	
-	close(temp_fd);
-	
-	read_fd = open(temp_filename, O_RDONLY);
-	if (read_fd < 0)
-	{
-		perror("heredoc");
-		unlink(temp_filename);
-		free(temp_filename);
-		signal(SIGINT, old_sigint);
-		return (-1);
-	}
-	
-	unlink(temp_filename);
-	free(temp_filename);
-	
-	signal(SIGINT, old_sigint);
-	
-	return (read_fd);
+	unlink(tmp);
+	free(tmp);
+	signal(SIGINT, old);
+	return (rfd);
 }
+
+

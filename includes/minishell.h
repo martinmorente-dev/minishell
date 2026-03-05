@@ -6,7 +6,7 @@
 /*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:01 by mafarino          #+#    #+#             */
-/*   Updated: 2026/03/03 19:40:33 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/03/05 19:30:49 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef enum e_redir_type
 {
 	REDIR_IN,
 	REDIR_OUT,
-	REDIR_APPEND, 
+	REDIR_APPEND,
 	REDIR_HEREDOC
 }	t_redir_type;
 
@@ -122,6 +122,7 @@ void		print_error(char *msg);
 void		ft_free_double_ptr(void **ptr_array);
 void		cleanup_shell(t_minishell *shell);
 void		add_env_to_list(t_env **env_list, t_env *new_node);
+void		write_line_to_fd(int fd, char *line);
 
 
 int			count_tokens(t_token *tokens);

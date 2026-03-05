@@ -6,7 +6,7 @@
 /*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 18:21:15 by mmorente          #+#    #+#             */
-/*   Updated: 2026/03/03 19:14:14 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/03/05 18:33:55 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,4 @@ int	builtin_export(char **args, t_env **env)
 		return (export_and_set(args[1], env));
 	return (0);
 }
-
 
