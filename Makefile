@@ -6,7 +6,7 @@
 #    By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 17:23:54 by mafarino          #+#    #+#              #
-#    Updated: 2026/03/05 19:32:16 by mmorente         ###   ########.fr        #
+#    Updated: 2026/03/19 21:32:44 by mmorente         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,14 +36,14 @@ MAIN_SRC	= $(SRC_DIR)/main.c
 
 LEXER_SRC	= $(LEXER_DIR)/tokenize.c \
 			  $(LEXER_DIR)/tokens_utils.c \
-			  $(LEXER_DIR)/quotes.c \
-			  $(LEXER_DIR)/token_list.c
+			  $(LEXER_DIR)/tokens_utils_2.c \
+			  $(LEXER_DIR)/redir.c \
+			  $(LEXER_DIR)/quotes.c
 
 PARSER_SRC	= $(PARSER_DIR)/parse.c \
-			  $(PARSER_DIR)/parse_commands.c \
-			  $(PARSER_DIR)/parse_redirections.c \
+			  $(PARSER_DIR)/parse_tokens_utils.c \
 			  $(PARSER_DIR)/parse_utils.c \
-			  $(PARSER_DIR)/syntax_check.c
+			  $(PARSER_DIR)/parse_utils2.c
 
 EXPAND_SRC	= $(EXPAND_DIR)/expand.c \
 			  $(EXPAND_DIR)/expand_utils.c \

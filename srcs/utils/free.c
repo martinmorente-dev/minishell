@@ -6,7 +6,7 @@
 /*   By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 14:07:41 by mafarino          #+#    #+#             */
-/*   Updated: 2026/03/03 19:24:04 by mmorente         ###   ########.fr       */
+/*   Updated: 2026/03/19 19:31:23 by mmorente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,44 @@ void	free_env(t_env *env)
 		tmp = env;
 		env = env->next;
 		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+	}
+}
+
+void	free_commands(t_cmd *cmds)
+{
+	t_cmd	*tmp_cmd;
+	t_redir	*tmp_redir;
+	int		i;
+
+	while (cmds)
+	{
+		tmp_cmd = cmds;
+		cmds = cmds->next;
+		i = 0;
+		while (tmp_cmd->args && tmp_cmd->args[i])
+			free(tmp_cmd->args[i++]);
+		free(tmp_cmd->args);
+		while (tmp_cmd->redirs)
+		{
+			tmp_redir = tmp_cmd->redirs;
+			tmp_cmd->redirs = tmp_cmd->redirs->next;
+			free(tmp_redir->file);
+			free(tmp_redir);
+		}
+		free(tmp_cmd);
+	}
+}
+
+void	free_tokens(t_token *tokens)
+{
+	t_token	*tmp;
+
+	while (tokens)
+	{
+		tmp = tokens;
+		tokens = tokens->next;
 		free(tmp->value);
 		free(tmp);
 	}
