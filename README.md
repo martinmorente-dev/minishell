@@ -236,5 +236,5 @@ This project was developed as part of the 42 School curriculum.
 
 ---
 
-**Authors**: alberome, mmorente  
+**Authors**: alberome, Martin Morente Vargas  
 **Last updated**: March 2026
