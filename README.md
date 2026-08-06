@@ -1,6 +1,6 @@
 # Minishell - TurtleShell
 
-*This project has been created as part of the 42 curriculum by alberome, mmorente.*
+*This project has been created as part of the 42 curriculum by alberome & Martin Morente Vargas.*
 
 ## Description
 
