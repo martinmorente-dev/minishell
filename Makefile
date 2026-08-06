@@ -1,130 +1,120 @@
 # **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mmorente <mmorente@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/02/05 17:23:54 by mafarino          #+#    #+#              #
-#    Updated: 2026/03/03 19:37:54 by mmorente         ###   ########.fr        #
-#                                                                              #
+#                                   Makefile                                   #
 # **************************************************************************** #
 
-NAME		= minishell
+NAME            := minishell
 
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
-INCLUDES	= -I./includes -I./libft
-LIBS		= -L./libft -lft -lreadline
+CC              := cc
+CFLAGS          := -Wall -Wextra -Werror -MMD -MP -Iinc -Ilib/libft
+LDFLAGS         :=
+RLFLAGS         := -lreadline -lncurses
 
-SRC_DIR		= srcs
-OBJ_DIR		= objs
-INC_DIR		= includes
-LIBFT_DIR	= libft
+# Try to autodetect readline via pkg-config
+PKG_CONFIG      := $(shell command -v pkg-config 2>/dev/null)
+ifeq ($(PKG_CONFIG),)
+# no pkg-config, keep defaults
+else
+READLINE_CFLAGS := $(shell pkg-config --cflags readline 2>/dev/null)
+READLINE_LIBS   := $(shell pkg-config --libs readline 2>/dev/null)
+CFLAGS          += $(READLINE_CFLAGS)
+ifneq ($(strip $(READLINE_LIBS)),)
+RLFLAGS         := $(READLINE_LIBS)
+endif
+endif
 
-LEXER_DIR	= $(SRC_DIR)/lexer
-PARSER_DIR	= $(SRC_DIR)/parser
-EXPAND_DIR	= $(SRC_DIR)/expander
-EXEC_DIR	= $(SRC_DIR)/executor
-BUILTIN_DIR	= $(SRC_DIR)/builtins
-REDIR_DIR	= $(SRC_DIR)/redirections
-ENV_DIR		= $(SRC_DIR)/env
-SIGNAL_DIR	= $(SRC_DIR)/signals
-UTILS_DIR	= $(SRC_DIR)/utils
+UNAME_S         := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	# Homebrew default include/lib paths for readline on macOS
+	CFLAGS      += -I/opt/homebrew/opt/readline/include
+	LDFLAGS     += -L/opt/homebrew/opt/readline/lib
+endif
 
-MAIN_SRC	= $(SRC_DIR)/main.c
+# ---------------------------------------------------------------------------- #
+# Libraries                                                                     #
+# ---------------------------------------------------------------------------- #
 
-LEXER_SRC	= $(LEXER_DIR)/tokenize.c \
-			  $(LEXER_DIR)/tokens_utils.c \
-			  $(LEXER_DIR)/quotes.c \
-			  $(LEXER_DIR)/token_list.c
+LIBFT_DIR	:= lib/libft
+LIBFT_A		:= $(LIBFT_DIR)/libft.a
 
-PARSER_SRC	= $(PARSER_DIR)/parse.c \
-			  $(PARSER_DIR)/parse_commands.c \
-			  $(PARSER_DIR)/parse_redirections.c \
-			  $(PARSER_DIR)/parse_utils.c \
-			  $(PARSER_DIR)/syntax_check.c
+# ---------------------------------------------------------------------------- #
+# Source files                                                                  #
+# ---------------------------------------------------------------------------- #
 
-EXPAND_SRC	= $(EXPAND_DIR)/expand.c \
-			  $(EXPAND_DIR)/expand_utils.c \
-			  $(EXPAND_DIR)/expand_vars.c \
-			  $(EXPAND_DIR)/quote_removal.c
+SRC_DIR         := src
+OBJ_DIR         := objs
+BUILTINS_DIR    := $(SRC_DIR)/builtins
+PARSER_DIR      := $(SRC_DIR)/parser
+EXEC_DIR        := $(SRC_DIR)/exec
+ENV_DIR         := $(SRC_DIR)/env
+UTILS_DIR       := $(SRC_DIR)/utils
 
-EXEC_SRC	= $(EXEC_DIR)/execute.c \
-			  $(EXEC_DIR)/execute_utils.c \
-			  $(EXEC_DIR)/pipes.c \
-			  $(EXEC_DIR)/processes.c \
-			  $(EXEC_DIR)/path.c
+SRCS            := \
+	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/shell_loop.c \
+	$(SRC_DIR)/signals.c \
+	$(ENV_DIR)/env.c \
+	$(ENV_DIR)/env_ops.c \
+	$(ENV_DIR)/env_convert.c \
+	$(BUILTINS_DIR)/builtins.c \
+	$(BUILTINS_DIR)/bi_echo.c \
+	$(BUILTINS_DIR)/bi_cd.c \
+	$(BUILTINS_DIR)/bi_pwd.c \
+	$(BUILTINS_DIR)/bi_export.c \
+	$(BUILTINS_DIR)/bi_unset.c \
+	$(BUILTINS_DIR)/bi_env.c \
+	$(BUILTINS_DIR)/bi_exit.c \
+	$(PARSER_DIR)/lexer.c \
+	$(PARSER_DIR)/lexer_word.c \
+	$(PARSER_DIR)/parser.c \
+	$(PARSER_DIR)/parser_argv.c \
+	$(PARSER_DIR)/parser_redirs.c \
+	$(PARSER_DIR)/eval_line.c \
+	$(PARSER_DIR)/eval_utils.c \
+	$(PARSER_DIR)/expand.c \
+	$(PARSER_DIR)/heredoc.c \
+	$(SRC_DIR)/script_prep.c \
+	$(SRC_DIR)/script_run.c \
+	$(EXEC_DIR)/exec.c \
+	$(EXEC_DIR)/exec_utils.c \
+	$(EXEC_DIR)/pipeline.c \
+	$(EXEC_DIR)/redirs.c \
+	$(UTILS_DIR)/strings.c \
+	$(UTILS_DIR)/errors.c \
+	$(UTILS_DIR)/wildcards.c \
+	$(UTILS_DIR)/utils.c
 
-BUILTIN_SRC	= $(BUILTIN_DIR)/builtin_echo.c \
-			  $(BUILTIN_DIR)/builtin_cd.c \
-			  $(BUILTIN_DIR)/builtin_pwd.c \
-			  $(BUILTIN_DIR)/builtin_env.c \
-			  $(BUILTIN_DIR)/builtin_export.c \
-			  $(BUILTIN_DIR)/builtin_unset.c \
-			  $(BUILTIN_DIR)/builtin_exit.c
+OBJS            := $(SRCS:%.c=$(OBJ_DIR)/%.o)
+DEPS            := $(OBJS:.o=.d)
 
-REDIR_SRC	= $(REDIR_DIR)/redirections.c \
-			  $(REDIR_DIR)/redir_utils.c \
-			  $(REDIR_DIR)/heredoc.c
+# ---------------------------------------------------------------------------- #
+# Rules                                                                         #
+# ---------------------------------------------------------------------------- #
 
-ENV_SRC		= $(ENV_DIR)/env_init.c \
-			  $(ENV_DIR)/env_utils.c
+all: $(LIBFT_A) $(NAME)
 
-SIGNAL_SRC	= $(SIGNAL_DIR)/signals.c
+$(NAME): $(OBJS) $(LIBFT_A)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS) $(LIBFT_A) $(RLFLAGS)
 
-UTILS_SRC	= $(UTILS_DIR)/free.c \
-			  $(UTILS_DIR)/utils.c \
-			  $(UTILS_DIR)/setup.c
+$(LIBFT_A):
+	$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 
-SRCS		= $(MAIN_SRC) \
-			  $(LEXER_SRC) \
-			  $(PARSER_SRC) \
-			  $(EXPAND_SRC) \
-			  $(EXEC_SRC) \
-			  $(BUILTIN_SRC) \
-			  $(REDIR_SRC) \
-			  $(ENV_SRC) \
-			  $(SIGNAL_SRC) \
-			  $(UTILS_SRC)
+bonus: CFLAGS += -DBONUS=1
+bonus: re
 
-OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+-include $(DEPS)
 
-LIBFT		= $(LIBFT_DIR)/libft.a
-
-all: $(NAME)
-
-$(LIBFT):
-	make -C $(LIBFT_DIR)
-
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS)  -o $(NAME)
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
-	make -C libft clean
+	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory clean || true
 
 fclean: clean
 	rm -f $(NAME)
-	make -C $(LIBFT_DIR) fclean
+	$(MAKE) -C $(LIBFT_DIR) --no-print-directory fclean || true
 
 re: fclean all
 
-norm:
-	norminette $(SRC_DIR) $(INC_DIR) $(LIBFT_DIR)
-
-valgrind: $(NAME)
-	valgrind --leak-check=full \
-			  --show-leak-kinds=all \
-			  --track-origins=yes \
-			  --suppressions=.ignore_readline_leaks.supp \
-			  ./$(NAME)
-
-debug: CFLAGS += -g3 -fsanitize=address
-debug: re
-
-.PHONY: all clean fclean re norm valgrind debug
+.PHONY: all clean fclean re bonus valgrind
